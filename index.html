@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mesazinona - Room sécurisé</title>
+    <title>Dark Messanging - Room sécurisé</title>
     <!-- Inclure Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
@@ -229,14 +229,14 @@
     </style>
 </head>
 <body>
-    <h1>PARSILAKA</h1>
+    <h1>Dark Messanging</h1>
 
     <!-- Section de connexion -->
     <div id="login-container">
         <input type="text" id="username" placeholder="Votre pseudo" required><br>
-        <input type="text" id="room-name-input" placeholder="Nom de la Villa" required><br>
+        <input type="text" id="room-name-input" placeholder="Nom de la Chambre" required><br>
         <input type="password" id="password-input" placeholder="Mot de passe" required><br>
-        <button onclick="joinRoom()">Entrez dans la Villa</button>
+        <button onclick="joinRoom()">Entrez dans la Chambre</button>
     </div>
 
     <!-- Section de chat -->
@@ -296,11 +296,11 @@
                     messages: {}
                 });
                 alert("Room créé avec succès !");
-                document.getElementById("room-name-display").textContent = "Villa : " + roomName;
+                document.getElementById("room-name-display").textContent = "Chambre : " + roomName;
                 switchToChat();
             } else if (dbPassword === password) {
                 alert("Connexion réussie !");
-                document.getElementById("room-name-display").textContent = "Villa : " + roomName;
+                document.getElementById("room-name-display").textContent = "Chambre : " + roomName;
                 switchToChat();
             } else {
                 alert("Mot de passe incorrect !");
