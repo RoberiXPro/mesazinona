@@ -148,9 +148,9 @@ h1 {
     <!-- Section de connexion -->
     <div id="login-container">
         <input type="text" id="username" placeholder="Votre pseudo" required><br>
-        <input type="text" id="room-name-input" placeholder="Nom de la Chambre" required><br>
+        <input type="text" id="room-name-input" placeholder="Nom du Lieu" required><br>
         <input type="password" id="password-input" placeholder="Mot de passe" required><br>
-        <button onclick="joinRoom()">Entrez dans la Chambre</button>
+        <button onclick="joinRoom()">Entrez</button>
     </div>
 
     <!-- Section de chat -->
@@ -199,11 +199,11 @@ h1 {
                     messages: {}
                 });
                 alert("Room créé avec succès !");
-                document.getElementById("room-name-display").textContent = "Chambre : " + roomName;
+                document.getElementById("room-name-display").textContent = "Lieu : " + roomName;
                 switchToChat();
             } else if (dbPassword === password) {
                 alert("Connexion réussie !");
-                document.getElementById("room-name-display").textContent = "Chambre : " + roomName;
+                document.getElementById("room-name-display").textContent = "Lieu : " + roomName;
                 switchToChat();
             } else {
                 alert("Mot de passe incorrect !");
