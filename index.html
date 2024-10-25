@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dark Messanging - Room sécurisé</title>
+    <title>Dark Messaging - Room sécurisé</title>
     <!-- Inclure Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
@@ -33,30 +33,6 @@ body {
     animation: fadeIn 0.5s ease;
 }
 
-#reply-container {
-    display: none;
-    background-color: #33384d;
-    padding: 5px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    color: #f0f0f0;
-}
-
-.reply-btn {
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 0.9rem;
-    padding: 5px;
-}
-
-.reply-btn:hover {
-    background-color: #2563eb;
-}
-
 input, button {
     padding: 10px;
     border-radius: 5px;
@@ -84,62 +60,6 @@ button:hover {
     background-color: #44495c;
 }
 
-#emoji-picker {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    max-width: 200px;
-    background-color: #222437;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    bottom: 60px;
-    left: 20px;
-}
-
-.emoji-picker-message {
-    display: none;
-    position: absolute;
-    bottom: 25px;
-    right: 5px;
-    background-color: #222437;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 10;
-    max-width: 200px;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-.emoji-btn {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    color: #ffcc00;
-    transition: transform 0.2s ease;
-}
-
-.emoji-btn:hover {
-    transform: scale(1.2);
-}
-
-.emoji {
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 5px;
-    transition: transform 0.1s ease;
-}
-
-.emoji:hover {
-    transform: scale(1.2);
-}
-
 #messages {
     max-height: 300px;
     overflow-y: auto;
@@ -149,7 +69,6 @@ button:hover {
     margin-bottom: 10px;
 }
 
-/* Applique un flou initial aux messages */
 .message {
     padding: 10px;
     margin-bottom: 8px;
@@ -161,20 +80,20 @@ button:hover {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    transition: opacity 1s ease; /* Transition pour l'effet de fondu */
+    transition: opacity 1s ease;
     opacity: 1;
 }
 
-.message.flou {
-    filter: blur(4px); /* Applique un flou initial à chaque message */
+.message .msg-text.flou {
+    filter: blur(4px); /* Applique le flou au texte seulement */
 }
 
 .message.fondu {
-    opacity: 0; /* Transition vers la transparence pour l'effet de fondu */
+    opacity: 0;
 }
 
 .action-buttons .btn-read {
-    background-color: #3b82f6; /* Style pour le bouton "Lire" */
+    background-color: #3b82f6;
     color: white;
     border: none;
     border-radius: 5px;
@@ -183,31 +102,15 @@ button:hover {
 }
 
 .message.user1 {
-    background-color: #4169e1; /* Fond charbon pour messages envoyés */
+    background-color: #4169e1;
     align-self: flex-end;
     border-radius: 10px 10px 0 10px;
 }
 
 .message.user2 {
-    background-color: #b3b3b3; /* Fond gris foncé pour messages reçus */
+    background-color: #b3b3b3;
     align-self: flex-start;
     border-radius: 10px 10px 10px 0;
-}
-
-.msg-text {
-    margin-bottom: 5px;
-}
-
-.username {
-    font-size: 0.8rem;
-    font-weight: bold;
-    background: linear-gradient(135deg, #0088cc, #ffcc00);
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
-.flou {
-    filter: blur(4px);
 }
 
 h1 {
@@ -227,54 +130,10 @@ h1 {
     display: flex;
     gap: 5px;
 }
-
-.action-buttons button {
-    background-color: #555973;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 5px;
-}
-
-.action-buttons button:hover {
-    background-color: #44495c;
-}
-
-.action-buttons .btn-reply {
-    background-color: #3b82f6;
-}
-
-.reply-box {
-    background-color: #33384d;
-    padding: 5px;
-    border-left: 2px solid #3b82f6;
-    margin-bottom: 10px;
-    font-style: italic;
-    color: #ccc;
-}
-
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
-    #login-container, #chat-container {
-        width: 100%;
-        padding: 15px;
-    }
-    input, button {
-        font-size: 0.9rem;
-        padding: 8px;
-    }
-    #messages {
-        max-height: 50vh;
-    }
-}
-
     </style>
 </head>
 <body>
-    <h1>Dark Messanging</h1>
+    <h1>Dark Messaging</h1>
 
     <!-- Section de connexion -->
     <div id="login-container">
@@ -288,23 +147,16 @@ h1 {
     <div id="chat-container">
         <div id="room-name-display" style="font-size: 1.5em; font-weight: bold; color: #ffd700; margin-bottom: 10px;"></div>
 
-        <!-- Section pour répondre à un message -->
-        <div id="reply-container">
-            <span id="reply-message"></span>
-            <button onclick="cancelReply()" style="float: right; background-color: #e74c3c; color: white; border: none; border-radius: 5px; padding: 5px;">Annuler</button>
-        </div>
-
         <div id="messages"></div>
         <div id="input-section">
             <button onclick="toggleEmojiPicker()">😊</button>
             <input type="text" id="message-input" placeholder="Écrivez un message">
             <button onclick="sendMessage()">Envoyer</button>
-            <button onclick="toggleAllMessages()">Afficher tous</button>
             <button onclick="quitRoom()">Quitter</button>
         </div>
         <div id="emoji-picker" style="display: none;">
-    <!-- Emoji Picker Content -->
-</div>
+            <!-- Emoji Picker Content -->
+        </div>
     </div>
 
 <script>
@@ -322,9 +174,6 @@ h1 {
     var db;
     var username;
     var roomName;
-    var replyMessageId = null;
-    var replyMessageText = "";
-    var allMessagesVisible = false;
 
     function joinRoom() {
         username = document.getElementById("username").value;
@@ -368,13 +217,6 @@ h1 {
         }
 
         var msgData = { "user": username, "message": message, "seen": false };
-        
-        // Inclure une citation si nécessaire
-        if (replyMessageId) {
-            msgData.replyTo = replyMessageText;
-            cancelReply();
-        }
-
         var msgRef = db.child("messages").push();
         msgRef.set(msgData);
 
@@ -386,7 +228,6 @@ h1 {
             displayMessage(snapshot.key, snapshot.val());
         });
 
-        // Écoute les suppressions de messages et retire l'élément du DOM
         db.child('messages').on('child_removed', function(snapshot) {
             const removedMessage = document.getElementById(snapshot.key);
             if (removedMessage) {
@@ -395,54 +236,17 @@ h1 {
         });
     }
 
-    // Liste d'émojis de base
-    const emojis = ["😀", "😂", "😍", "😎", "😊", "😢", "😡", "👍", "👎", "🎉", "❤️", "🔥"];
-
-    function toggleEmojiPicker() {
-        const picker = document.getElementById("emoji-picker");
-        picker.style.display = picker.style.display === "none" ? "flex" : "none";
-    }
-
-    function loadEmojis() {
-        const picker = document.getElementById("emoji-picker");
-        emojis.forEach(emoji => {
-            const emojiSpan = document.createElement("span");
-            emojiSpan.textContent = emoji;
-            emojiSpan.className = "emoji";
-            emojiSpan.onclick = function() {
-                insertEmoji(emoji);
-            };
-            picker.appendChild(emojiSpan);
-        });
-    }
-
-    function insertEmoji(emoji) {
-        const messageInput = document.getElementById("message-input");
-        messageInput.value += emoji;
-        document.getElementById("emoji-picker").style.display = "none";
-    }
-
-    // Charger les émojis au chargement de la page
-    document.addEventListener("DOMContentLoaded", loadEmojis);
-
-    function quitRoom() {
-        document.getElementById("chat-container").style.display = "none";
-        document.getElementById("login-container").style.display = "block";
-    }
-
-    // Modification de la fonction displayMessage pour inclure le bouton Lire
     function displayMessage(key, data) {
         var msgDiv = document.createElement("div");
         msgDiv.id = key;
         msgDiv.className = (data.user === username ? "message user1" : "message user2");
-        msgDiv.classList.add("flou"); // Applique le flou initial
 
         var usernameDiv = document.createElement("div");
         usernameDiv.className = "username";
         usernameDiv.textContent = data.user;
 
         var textSpan = document.createElement("span");
-        textSpan.className = "msg-text";
+        textSpan.className = "msg-text flou"; // Applique le flou uniquement au texte
         textSpan.textContent = data.message;
 
         msgDiv.appendChild(usernameDiv);
@@ -453,54 +257,36 @@ h1 {
         readBtn.textContent = "Lire";
         readBtn.className = "btn-read";
         readBtn.onclick = function() {
-            removeBlurAndDeleteMessage(msgDiv, key);
+            removeBlurAndDeleteMessage(msgDiv, textSpan, key);
         };
 
-        // Ajouter le bouton Lire dans le conteneur d'actions
         var actionButtons = document.createElement("div");
         actionButtons.className = "action-buttons";
         actionButtons.appendChild(readBtn);
         msgDiv.appendChild(actionButtons);
 
         document.getElementById("messages").appendChild(msgDiv);
-        scrollToBottom(); // Scroll automatique vers le bas
+        scrollToBottom();
     }
 
-    // Fonction pour retirer le flou et supprimer le message après 10 secondes
-    function removeBlurAndDeleteMessage(msgDiv, key) {
-        msgDiv.classList.remove("flou"); // Retire le flou
+    function removeBlurAndDeleteMessage(msgDiv, textSpan, key) {
+        textSpan.classList.remove("flou");
 
-        // Délai de 10 secondes avant la suppression avec effet de fondu
         setTimeout(function() {
-            msgDiv.classList.add("fondu"); // Effet de fondu
+            msgDiv.classList.add("fondu");
 
             setTimeout(function() {
-                msgDiv.remove(); // Retirer du DOM
-                db.child("messages/" + key).remove(); // Supprimer de Firebase
-            }, 1000); // Attendre la fin de l'effet fondu avant de retirer du DOM
-        }, 10000); // Supprimer après 10 secondes
+                msgDiv.remove();
+                db.child("messages/" + key).remove();
+            }, 1000);
+        }, 10000);
     }
 
-    function toggleAllMessages() {
-        var allMessages = document.querySelectorAll(".msg-text");
-        allMessages.forEach(function(message) {
-            if (allMessagesVisible) {
-                message.classList.add("flou");
-            } else {
-                message.classList.remove("flou");
-            }
-        });
-        allMessagesVisible = !allMessagesVisible;
-        document.querySelector("button[onclick='toggleAllMessages()']").textContent = allMessagesVisible ? "Masquer tous" : "Afficher tous";
-    }
-
-    // Fonction de défilement automatique
     function scrollToBottom() {
         var messagesDiv = document.getElementById("messages");
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 
-    // Envoi de message en appuyant sur Entrée
     document.getElementById("message-input").addEventListener("keydown", function(event) {
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
