@@ -77,7 +77,7 @@ button:hover {
     max-width: 70%;
     color: #e0e0e0;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
     position: relative;
     transition: opacity 1s ease;
@@ -85,7 +85,7 @@ button:hover {
 }
 
 .message .msg-text.flou {
-    filter: blur(4px); /* Applique le flou au texte seulement */
+    filter: blur(4px);
 }
 
 .message.fondu {
@@ -99,6 +99,7 @@ button:hover {
     border-radius: 5px;
     cursor: pointer;
     padding: 5px;
+    margin-left: auto; /* Position à droite */
 }
 
 .message.user1 {
@@ -246,24 +247,28 @@ h1 {
         usernameDiv.textContent = data.user;
 
         var textSpan = document.createElement("span");
-        textSpan.className = "msg-text flou"; // Applique le flou uniquement au texte
+        textSpan.className = "msg-text";
         textSpan.textContent = data.message;
 
         msgDiv.appendChild(usernameDiv);
         msgDiv.appendChild(textSpan);
 
-        // Bouton Lire
-        var readBtn = document.createElement("button");
-        readBtn.textContent = "Lire";
-        readBtn.className = "btn-read";
-        readBtn.onclick = function() {
-            removeBlurAndDeleteMessage(msgDiv, textSpan, key);
-        };
+        // Bouton "Lire" et flou seulement pour les messages reçus
+        if (data.user !== username) {
+            textSpan.classList.add("flou");
 
-        var actionButtons = document.createElement("div");
-        actionButtons.className = "action-buttons";
-        actionButtons.appendChild(readBtn);
-        msgDiv.appendChild(actionButtons);
+            var readBtn = document.createElement("button");
+            readBtn.textContent = "Lire";
+            readBtn.className = "btn-read";
+            readBtn.onclick = function() {
+                removeBlurAndDeleteMessage(msgDiv, textSpan, key);
+            };
+
+            var actionButtons = document.createElement("div");
+            actionButtons.className = "action-buttons";
+            actionButtons.appendChild(readBtn);
+            msgDiv.appendChild(actionButtons);
+        }
 
         document.getElementById("messages").appendChild(msgDiv);
         scrollToBottom();
