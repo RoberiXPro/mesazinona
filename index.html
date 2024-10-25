@@ -322,9 +322,6 @@ h1 {
     var db;
     var username;
     var roomName;
-    var replyMessageId = null;
-    var replyMessageText = "";
-    var allMessagesVisible = false;
 
     function joinRoom() {
         username = document.getElementById("username").value;
@@ -368,12 +365,6 @@ h1 {
         }
 
         var msgData = { "user": username, "message": message, "seen": false };
-        
-        // Inclure une citation si nécessaire
-        if (replyMessageId) {
-            msgData.replyTo = replyMessageText;
-            cancelReply();
-        }
 
         var msgRef = db.child("messages").push();
         msgRef.set(msgData);
@@ -479,19 +470,6 @@ h1 {
                 db.child("messages/" + key).remove(); // Supprimer de Firebase
             }, 1000); // Attendre la fin de l'effet fondu avant de retirer du DOM
         }, 10000); // Supprimer après 10 secondes
-    }
-
-    function toggleAllMessages() {
-        var allMessages = document.querySelectorAll(".msg-text");
-        allMessages.forEach(function(message) {
-            if (allMessagesVisible) {
-                message.classList.add("flou");
-            } else {
-                message.classList.remove("flou");
-            }
-        });
-        allMessagesVisible = !allMessagesVisible;
-        document.querySelector("button[onclick='toggleAllMessages()']").textContent = allMessagesVisible ? "Masquer tous" : "Afficher tous";
     }
 
     // Fonction de défilement automatique
