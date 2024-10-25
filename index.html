@@ -149,6 +149,7 @@ button:hover {
     margin-bottom: 10px;
 }
 
+/* Applique un flou initial aux messages */
 .message {
     padding: 10px;
     margin-bottom: 8px;
@@ -160,6 +161,25 @@ button:hover {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    transition: opacity 1s ease; /* Transition pour l'effet de fondu */
+    opacity: 1;
+}
+
+.message.flou {
+    filter: blur(4px); /* Applique un flou initial à chaque message */
+}
+
+.message.fondu {
+    opacity: 0; /* Transition vers la transparence pour l'effet de fondu */
+}
+
+.action-buttons .btn-read {
+    background-color: #3b82f6; /* Style pour le bouton "Lire" */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
 }
 
 .message.user1 {
