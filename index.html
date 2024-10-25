@@ -99,7 +99,7 @@ button:hover {
     border-radius: 5px;
     cursor: pointer;
     padding: 5px;
-    margin-left: auto; /* Position à droite */
+    margin-left: auto;
 }
 
 .message.user1 {
@@ -112,6 +112,15 @@ button:hover {
     background-color: #b3b3b3;
     align-self: flex-start;
     border-radius: 10px 10px 10px 0;
+}
+
+/* Style pour le nom de l'utilisateur */
+.username {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #ffd700;
+    margin-right: 10px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 h1 {
@@ -253,7 +262,6 @@ h1 {
         msgDiv.appendChild(usernameDiv);
         msgDiv.appendChild(textSpan);
 
-        // Bouton "Lire" et flou seulement pour les messages reçus
         if (data.user !== username) {
             textSpan.classList.add("flou");
 
@@ -261,35 +269,39 @@ h1 {
             readBtn.textContent = "Lire";
             readBtn.className = "btn-read";
             readBtn.onclick = function() {
-                removeBlurAndDeleteMessage(msgDiv, textSpan, key);
+                if (textSpan.classList.contains("flou")) {
+                    textSpan.classList.remove("flou");
+                    readBtn.textContent = "Masquer";
+                    setTimeout(function() {
+                        msgDiv.classList.add("fondu");
+                        setTimeout(function() {
+                            msgDiv.remove();
+                            db.child("messages/" + key).remove();
+                        }, 1000);
+                    }, 10000);
+                } else {
+                    textSpan.classList.add("flou");
+                    readBtn.textContent = "Lire";
+                }
             };
 
-            var actionButtons = document.createElement("div");
-            actionButtons.className = "action-buttons";
-            actionButtons.appendChild(readBtn);
-            msgDiv.appendChild(actionButtons);
+            msgDiv.appendChild(readBtn);
         }
 
         document.getElementById("messages").appendChild(msgDiv);
         scrollToBottom();
     }
 
-    function removeBlurAndDeleteMessage(msgDiv, textSpan, key) {
-        textSpan.classList.remove("flou");
-
-        setTimeout(function() {
-            msgDiv.classList.add("fondu");
-
-            setTimeout(function() {
-                msgDiv.remove();
-                db.child("messages/" + key).remove();
-            }, 1000);
-        }, 10000);
-    }
-
     function scrollToBottom() {
         var messagesDiv = document.getElementById("messages");
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function quitRoom() {
+        document.getElementById("chat-container").style.display = "none";
+        document.getElementById("login-container").style.display = "block";
+        document.getElementById("room-name-display").textContent = "";
+        document.getElementById("messages").innerHTML = "";
     }
 
     document.getElementById("message-input").addEventListener("keydown", function(event) {
