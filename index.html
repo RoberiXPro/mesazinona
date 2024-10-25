@@ -168,7 +168,6 @@ h1 {
             <!-- Emoji Picker Content -->
         </div>
     </div>
-
 <script>
     var firebaseConfig = {
         apiKey: "AIzaSyDJw_Y3ALnNT3Vw7q3m1TU24kVRoIhd2NE",
@@ -262,6 +261,10 @@ h1 {
         msgDiv.appendChild(usernameDiv);
         msgDiv.appendChild(textSpan);
 
+        var actionButtons = document.createElement("div");
+        actionButtons.className = "action-buttons";
+
+        // Bouton Lire/Masquer pour les messages reçus uniquement
         if (data.user !== username) {
             textSpan.classList.add("flou");
 
@@ -284,11 +287,31 @@ h1 {
                     readBtn.textContent = "Lire";
                 }
             };
-
-            msgDiv.appendChild(readBtn);
+            actionButtons.appendChild(readBtn);
         }
 
+        // Bouton Supprimer pour l'envoyeur et le destinataire
+        var deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Supprimer";
+        deleteBtn.className = "btn-delete";
+        deleteBtn.onclick = function() {
+            if (data.user === username) {
+                // Supprimer uniquement pour l'envoyeur sans affecter le destinataire
+                msgDiv.remove();
+            } else {
+                // Supprimer pour les deux côtés si c'est le destinataire qui clique
+                msgDiv.classList.add("fondu");
+                setTimeout(function() {
+                    msgDiv.remove();
+                    db.child("messages/" + key).remove();
+                }, 1000);
+            }
+        };
+        actionButtons.appendChild(deleteBtn);
+
+        msgDiv.appendChild(actionButtons);
         document.getElementById("messages").appendChild(msgDiv);
+
         scrollToBottom();
     }
 
@@ -311,7 +334,6 @@ h1 {
         }
     });
 </script>
-
     <footer style="margin-top: 20px; font-size: 0.8rem; color: #999; text-align: center;">
         &copy; BigBob-Prod 2024
     </footer>
