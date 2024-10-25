@@ -448,18 +448,8 @@ function displayMessage(key, data) {
         prepareReply(key, data.message);
     };
 
-    // Bouton Supprimer
-    var deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Supprimer";
-    deleteBtn.className = "btn-delete";
-    deleteBtn.style.backgroundColor = "#e74c3c"; // Couleur rouge pour "Supprimer"
-    deleteBtn.onclick = function() {
-        db.child("messages/" + key).remove();
-    };
-
-    // Ajouter les deux boutons dans le conteneur d'actions
+     // Ajouter les deux boutons dans le conteneur d'actions
     actionButtons.appendChild(replyBtn);
-    actionButtons.appendChild(deleteBtn);
 
     // Ajouter le conteneur des boutons en dessous du message
     msgDiv.appendChild(actionButtons);
